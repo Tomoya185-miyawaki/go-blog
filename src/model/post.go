@@ -55,3 +55,18 @@ func GetRows() []PostDisplay {
 	}
 	return posts
 }
+
+func Create(title string, content string) {
+	db := db.Execute()
+	defer db.Close()
+
+	insert, err := db.Prepare("INSERT INTO posts(title, content) VALUES(?, ?)")
+	if err != nil {
+		log.Fatalf("Create err:%v", err)
+	}
+	result, err := insert.Exec(title, content)
+	if err != nil {
+		panic(err.Error())
+	}
+	log.Println(result.LastInsertId())
+}
