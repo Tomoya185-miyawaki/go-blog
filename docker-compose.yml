@@ -1,10 +1,22 @@
 version: '3'
 services:
-  go:
-    container_name: go-blog
+  app:
+    container_name: go-blog-app
     build: ./infra
     tty: true
     ports:
       - "8000:8000"
     volumes:
       - ./src:/app
+  db:
+    container_name: go-blog-db
+    image: mysql:5.7
+    ports:
+      - "13306:3306"
+    volumes:
+      - ./data/db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: go_blog_db
+      MYSQL_USER: go_blog
+      MYSQL_PASSWORD: root

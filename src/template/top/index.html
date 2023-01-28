@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>トップページ</title>
+</head>
+<body>
+  <h1>ブログ一覧</h1>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>タイトル</th>
+      <th>コンテンツ</th>
+      <th>作成日</th>
+    </tr>
+    {{range . }}
+    <tr>
+      <td>{{.ID}}</td>
+      <td>{{.Title}}</td>
+      <td>{{.Content}}</td>
+      <td>{{.Created}}</td>
+    </tr>
+    {{end}}
+  </table>
+  <button><a href="/create">作成する</a></button>
+</body>
+</html>
