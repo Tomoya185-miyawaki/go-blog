@@ -15,7 +15,7 @@
       <th>作成日</th>
     </tr>
     {{range . }}
-    <tr>
+    <tr style="cursor: pointer;" onclick="location.href='/show/{{.ID}}'">
       <td>{{.ID}}</td>
       <td>{{.Title}}</td>
       <td>{{.Content}}</td>

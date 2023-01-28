@@ -2,6 +2,8 @@ package post
 
 import (
 	"database/sql"
+	"errors"
+	"fmt"
 	"log"
 	"time"
 
@@ -20,6 +22,11 @@ type PostDisplay struct {
 	Title   string
 	Content string
 	Created string
+}
+
+type GetRowResponse struct {
+	PostDisplay PostDisplay
+	Valid       bool
 }
 
 func GetRows() []PostDisplay {
@@ -54,6 +61,36 @@ func GetRows() []PostDisplay {
 		log.Fatalf("GetRows rows.Err error err:%v", err)
 	}
 	return posts
+}
+
+func GetRow(id string) GetRowResponse {
+	db := db.Execute()
+	defer db.Close()
+	post := &Post{}
+	display := &PostDisplay{}
+	res := &GetRowResponse{}
+	err := db.QueryRow("SELECT * FROM posts WHERE id = ?", id).
+		Scan(&post.ID, &post.Title, &post.Content, &post.Created)
+	if errors.Is(err, sql.ErrNoRows) {
+		fmt.Println("GetRow no records.")
+		res.PostDisplay = *display
+		res.Valid = false
+		return *res
+	}
+	if err != nil {
+		log.Fatalf("GetRow db.QueryRow error err:%v", err)
+	}
+	display.ID = post.ID
+	display.Title = post.Title
+	display.Created = post.Created.Format("2006/1/2 15:04")
+	if post.Content.Valid {
+		display.Content = post.Content.String
+	} else {
+		display.Content = ""
+	}
+	res.PostDisplay = *display
+	res.Valid = true
+	return *res
 }
 
 func Create(title string, content string) {

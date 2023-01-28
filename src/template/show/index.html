@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang='ja'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>ブログ編集</title>
+</head>
+<body>
+    <h1>ブログ編集</h1>
+    <form method="POST" action="/update">
+      <input type="text" name="title" value="{{.Title}}" required>
+      <br>
+      <textarea name="content" placeholder="例）家の周りでする" style="margin: 20px 0;">{{.Content}}</textarea>
+      <br>
+      <input type="submit" value="更新">
+    </form>
+</body>
+</html>

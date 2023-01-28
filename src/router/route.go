@@ -7,7 +7,8 @@ import (
 )
 
 func Route() {
-	http.HandleFunc("/", controller.TopController)
+	http.HandleFunc("/show/", controller.ShowController)
 	http.HandleFunc("/create", controller.CreateController)
+	http.HandleFunc("/", controller.TopController)
 	http.ListenAndServe(":8000", nil)
 }
