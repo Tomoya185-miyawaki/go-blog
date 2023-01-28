@@ -64,9 +64,8 @@ func Create(title string, content string) {
 	if err != nil {
 		log.Fatalf("Create err:%v", err)
 	}
-	result, err := insert.Exec(title, content)
+	_, err = insert.Exec(title, content)
 	if err != nil {
 		panic(err.Error())
 	}
-	log.Println(result.LastInsertId())
 }
